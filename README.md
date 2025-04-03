@@ -24,7 +24,7 @@ This guide contains information about (1) [Installation](#installation), (2) [Ru
 3. Add MuJoCo to library paths: `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.mujoco/mujoco200/bin`
 
 * the mujoco could be downloaded here: https://gist.github.com/ellisbrown/47bfd3e524aed11216cd3c0a0872a654
-
+* generate glad: https://glad.dav1d.de/generated/tmpui0_axe1glad/
 
 ### Setup conda environment
 1. Create the conda environment: `conda env create --name maple --file=maple.yml`
