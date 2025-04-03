@@ -23,6 +23,9 @@ This guide contains information about (1) [Installation](#installation), (2) [Ru
 2. (linux) Setup additional dependencies: ```sudo apt install libgl1-mesa-dev libgl1-mesa-glx libglew-dev libosmesa6-dev software-properties-common net-tools xpra xserver-xorg-dev libglfw3-dev patchelf```
 3. Add MuJoCo to library paths: `export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$HOME/.mujoco/mujoco200/bin`
 
+* the mujoco could be downloaded here: https://gist.github.com/ellisbrown/47bfd3e524aed11216cd3c0a0872a654
+
+
 ### Setup conda environment
 1. Create the conda environment: `conda env create --name maple --file=maple.yml`
 2. (if above fails) edit `maple.yml` to modify dependencies and then resume setup: `conda env update --name maple --file=maple.yml`
