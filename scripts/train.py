@@ -244,8 +244,8 @@ if __name__ == "__main__":
     )
     for exp_id, variant in enumerate(sweeper.iterate_hyperparameters()):
         variant = process_variant(variant)
-
         run_experiment(
+
             experiment,
             exp_folder=args.env,
             exp_prefix=args.label,
