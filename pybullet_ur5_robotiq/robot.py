@@ -37,6 +37,7 @@ class RobotBase(object):
         self.base_ori = p.getQuaternionFromEuler(ori)
 
     def load(self):
+        print(' !!! load function.  ')
         self.__init_robot__()
         self.__parse_joint_info__()
         self.__post_load__()
@@ -47,7 +48,8 @@ class RobotBase(object):
 
     def __parse_joint_info__(self):
         numJoints = p.getNumJoints(self.id)
-        jointInfo = namedtuple('jointInfo', 
+        print(' joints number: ', numJoints)
+        jointInfo = namedtuple('jointInfo',
             ['id','name','type','damping','friction','lowerLimit','upperLimit','maxForce','maxVelocity','controllable'])
         self.joints = []
         self.controllable_joints = []
@@ -113,8 +115,9 @@ class RobotBase(object):
             x, y, z, roll, pitch, yaw = action
             pos = (x, y, z)
             orn = p.getQuaternionFromEuler((roll, pitch, yaw))
-            joint_poses = p.calculateInverseKinematics(self.id, self.eef_id, pos, orn,
-                                                       self.arm_lower_limits, self.arm_upper_limits, self.arm_joint_ranges, self.arm_rest_poses,
+            joint_poses = p.calculateInverseKinematics(self.id, self.eef_id,
+                                                       pos, orn,
+                                                      self.arm_lower_limits, self.arm_upper_limits, self.arm_joint_ranges, self.arm_rest_poses,
                                                        maxNumIterations=20)
         elif control_method == 'joint':
             assert len(action) == self.arm_num_dofs
@@ -166,13 +169,17 @@ class Panda(RobotBase):
 
 
 class UR5Robotiq85(RobotBase):
+
     def __init_robot__(self):
-        self.eef_id = 7
         self.arm_num_dofs = 6
-        self.arm_rest_poses = [-1.5690622952052096, -1.5446774605904932, 1.343946009733127, -1.3708613585093699,
+        self.arm_rest_poses = [-1.5690622952052096, -1.5446774605904932,
+                               1.343946009733127, -1.3708613585093699,
                                -1.5707970583733368, 0.0009377758247187636]
         self.id = p.loadURDF('./urdf/ur5_robotiq_85.urdf', self.base_pos, self.base_ori,
                              useFixedBase=True, flags=p.URDF_ENABLE_CACHED_GRAPHICS_SHAPES)
+        print(' !!! num joints', p.getNumJoints(self.id))
+        self.eef_id = 7
+
         self.gripper_range = [0, 0.085]
     
     def __post_load__(self):
@@ -210,7 +217,8 @@ class UR5Robotiq140(UR5Robotiq85):
     def __init_robot__(self):
         self.eef_id = 7
         self.arm_num_dofs = 6
-        self.arm_rest_poses = [-1.5690622952052096, -1.5446774605904932, 1.343946009733127, -1.3708613585093699,
+        self.arm_rest_poses = [-1.5690622952052096, -1.5446774605904932,
+                               1.343946009733127, -1.3708613585093699,
                                -1.5707970583733368, 0.0009377758247187636]
         self.id = p.loadURDF('./urdf/ur5_robotiq_140.urdf', self.base_pos, self.base_ori,
                              useFixedBase=True, flags=p.URDF_ENABLE_CACHED_GRAPHICS_SHAPES)

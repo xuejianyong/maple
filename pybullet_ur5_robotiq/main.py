@@ -28,7 +28,8 @@ def user_control_demo():
     # env.SIMULATION_STEP_DELAY = 0
     while True:
         obs, reward, done, info = env.step(env.read_debug_parameter(), 'end')
-        # print(obs, reward, done, info)
+        #print('  --------------------  ', obs, reward, done, info)
+
 
 
 if __name__ == '__main__':

@@ -33,6 +33,7 @@ class ClutteredPushGrasp:
         p.setGravity(0, 0, -10)
         self.planeID = p.loadURDF("plane.urdf")
 
+        print(' !!! the init function of ClutteredPushGrasp class ')
         self.robot.load()
         self.robot.step_simulation = self.step_simulation
 
@@ -44,6 +45,7 @@ class ClutteredPushGrasp:
         self.pitchId = p.addUserDebugParameter("pitch", -3.14, 3.14, np.pi/2)
         self.yawId = p.addUserDebugParameter("yaw", -np.pi/2, np.pi/2, np.pi/2)
         self.gripper_opening_length_control = p.addUserDebugParameter("gripper_opening_length", 0, 0.085, 0.04)
+        self.freeparameter = p.addUserDebugParameter('free parameter', 0, 0.085, 0.04)
 
         self.boxID = p.loadURDF("./urdf/skew-box-button.urdf",
                                 [0.0, 0.0, 0.0],
@@ -75,6 +77,7 @@ class ClutteredPushGrasp:
         pitch = p.readUserDebugParameter(self.pitchId)
         yaw = p.readUserDebugParameter(self.yawId)
         gripper_opening_length = p.readUserDebugParameter(self.gripper_opening_length_control)
+        free = p.readUserDebugParameter(self.freeparameter)
 
         return x, y, z, roll, pitch, yaw, gripper_opening_length
 
