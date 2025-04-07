@@ -66,11 +66,15 @@ class PickPlaceEnv():
         # Temporarily disable rendering to load URDFs faster.
         pybullet.configureDebugVisualizer(pybullet.COV_ENABLE_RENDERING, 0)
 
+
+
         # Add robot.
         pybullet.loadURDF("plane.urdf", [0, 0, -0.001])
         self.robot_id = pybullet.loadURDF("./ur5e/ur5e.urdf", [0, 0, 0], flags=pybullet.URDF_USE_MATERIAL_COLORS_FROM_MTL)
         #self.ghost_id = pybullet.loadURDF("ur5e/ur5e.urdf", [0, 0, -10])  # For forward kinematics.
 
+        numJoints = pybullet.getNumJoints(self.robot_id)
+        print(' !!! robot numjoints: ', numJoints)
 
         self.joint_ids = [pybullet.getJointInfo(self.robot_id, i) for i in range(pybullet.getNumJoints(self.robot_id))]
         self.joint_ids = [j[0] for j in self.joint_ids if j[2] == pybullet.JOINT_REVOLUTE]
@@ -84,6 +88,9 @@ class PickPlaceEnv():
             while self.gripper.constraints_thread.is_alive():
                 self.constraints_thread_active = False
         self.gripper = Robotiq2F85(self.robot_id, self.ee_link_id)
+
+
+
         self.gripper.release()
 
         # Add workspace.
