@@ -45,10 +45,10 @@ config = {'pick':  ['yellow block', 'green block', 'blue block'],
 
 np.random.seed(42)
 obs = env.reset(config)
-from robosuite.controllers.skill_controller import *
+#from robosuite.controllers.skill_controller import *
 
 
-reach = ReachSkill()
+#reach = ReachSkill()
 
 
 
