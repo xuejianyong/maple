@@ -13,6 +13,9 @@ class Robotiq2F85:
     rot = pybullet.getQuaternionFromEuler([np.pi, 0, np.pi])
     urdf = "robotiq_2f_85/robotiq_2f_85.urdf"
     self.body = pybullet.loadURDF(urdf, pos, rot)
+    grippernumJoints = pybullet.getNumJoints(self.body)
+    print(' !!! gripper numjoints: ', grippernumJoints)
+
     self.n_joints = pybullet.getNumJoints(self.body)
     self.activated = False
 
