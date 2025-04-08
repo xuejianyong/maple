@@ -75,6 +75,7 @@ base_variant = dict(
                     aff_type='dense',
                     aff_tanh_scaling=10.0,
                 ),
+
                 atomic_config=dict(
                     use_ori_params=True,
                 ),
@@ -191,6 +192,7 @@ env_params = dict(
     },
 )
 
+
 def process_variant(variant):
     if args.debug:
         variant['algorithm_kwargs']['num_epochs'] = 3
@@ -203,12 +205,9 @@ def process_variant(variant):
         variant['algorithm_kwargs']['num_trains_per_train_loop'] = 50
         variant['replay_buffer_size'] = int(1E3)
         variant['dump_video_kwargs']['columns'] = 2
-
     if args.no_video:
         variant['save_video'] = False
-
     variant['exp_label'] = args.label
-
     return variant
 
 def deep_update(source, overrides):
@@ -236,8 +235,12 @@ if __name__ == "__main__":
     parser.add_argument('--snapshot_gap', type=int, default=25)
 
     args = parser.parse_args()
-    print('args:', args, args.env)
     search_space = env_params[args.env]
+    """
+    args= Namespace(debug=False, env='stack', first_variant=False, gpu_id=0, label='test', no_gpu=False, no_video=False, snapshot_gap=25) 
+    args.env = stack
+    search_space = {'env_variant.env_type': ['Stack']}
+    """
 
     sweeper = hyp.DeterministicHyperparameterSweeper(
         search_space, default_parameters=base_variant,
@@ -245,13 +248,9 @@ if __name__ == "__main__":
     for exp_id, variant in enumerate(sweeper.iterate_hyperparameters()):
         variant = process_variant(variant)
         run_experiment(
-
-            experiment,
-            exp_folder=args.env,
-            exp_prefix=args.label,
+            experiment, exp_folder=args.env, exp_prefix=args.label,
             variant=variant,
-            snapshot_mode='gap_and_last',
-            snapshot_gap=args.snapshot_gap,
+            snapshot_mode='gap_and_last', snapshot_gap=args.snapshot_gap,
             exp_id=exp_id,
             use_gpu=(not args.no_gpu),
             gpu_id=args.gpu_id,

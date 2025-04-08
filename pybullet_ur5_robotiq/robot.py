@@ -163,6 +163,7 @@ class Panda(RobotBase):
         p.changeConstraint(c, gearRatio=-1, erp=0.1, maxForce=50)
 
     def move_gripper(self, open_length):
+
         assert self.gripper_range[0] <= open_length <= self.gripper_range[1]
         for i in [9, 10]:
             p.setJointMotorControl2(self.id, i, p.POSITION_CONTROL, open_length, force=20)
@@ -206,11 +207,14 @@ class UR5Robotiq85(RobotBase):
             p.changeConstraint(c, gearRatio=-multiplier, maxForce=100, erp=1)  # Note: the mysterious `erp` is of EXTREME importance
 
     def move_gripper(self, open_length):
+        print(' --- skill move_gripper UR5Robotiq85')
         # open_length = np.clip(open_length, *self.gripper_range)
         open_angle = 0.715 - math.asin((open_length - 0.010) / 0.1143)  # angle calculation
         # Control the mimic gripper joint(s)
-        p.setJointMotorControl2(self.id, self.mimic_parent_id, p.POSITION_CONTROL, targetPosition=open_angle,
-                                force=self.joints[self.mimic_parent_id].maxForce, maxVelocity=self.joints[self.mimic_parent_id].maxVelocity)
+        p.setJointMotorControl2(self.id, self.mimic_parent_id, p.POSITION_CONTROL,
+                                targetPosition=open_angle,
+                                force=self.joints[self.mimic_parent_id].maxForce,
+                                maxVelocity=self.joints[self.mimic_parent_id].maxVelocity)
 
 
 class UR5Robotiq140(UR5Robotiq85):

@@ -29,9 +29,11 @@ def experiment(variant):
         controller_config_update = env_variant.get('controller_config_update', {})
         controller_config.update(controller_config_update)
 
+        # robot_type = env_variant.get('robot_type', 'Panda')
         robot_type = env_variant.get('robot_type', 'Panda')
 
         obs_keys = env_variant['robot_keys'] + env_variant['obj_keys']
+        print(' --- robosuite_launcher.py, obs_keys:', obs_keys)
 
         env = suite.make(
             env_name=env_variant['env_type'],
@@ -54,7 +56,7 @@ def experiment(variant):
     obs_dim = expl_env.observation_space.low.size
     action_dim = eval_env.action_space.low.size
 
-    M = variant['layer_size']
+    M = variant['layer_size']  # 256
     qf1 = ConcatMlp(
         input_size=obs_dim + action_dim,
         output_size=1,

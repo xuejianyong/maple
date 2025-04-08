@@ -163,6 +163,7 @@ class DeterministicHyperparameterSweeper(Sweeper):
             'hp_2': [value1, value2, value3],
             ...
         }
+         {'env_variant.env_type': ['Stack']}
         ```
         This format is like the param_grid in SciKit-Learn:
         http://scikit-learn.org/stable/modules/grid_search.html#exhaustive-grid-search
@@ -176,10 +177,18 @@ class DeterministicHyperparameterSweeper(Sweeper):
             named_hyperparameters.append(
                 [(name, v) for v in values]
             )
+        """
+         named_hyperparameters = [
+                                    [('env_variant.env_type', 'Stack')]
+                                 ]
+        """
         self._hyperparameters_dicts = [
             ppp.dot_map_dict_to_nested_dict(dict(tuple_list))
             for tuple_list in itertools.product(*named_hyperparameters)
         ]
+        """
+        self._hyperparameters_dicts = [{'env_variant': {'env_type': 'Stack'}}]
+        """
 
     def iterate_hyperparameters(self):
         """

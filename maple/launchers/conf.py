@@ -39,6 +39,9 @@ CODE_DIRS_TO_MOUNT = [
     # '/home/user/python/module/one', Add more paths as needed
 ]
 
+print(' -- conf.py CODE_DIRS_TO_MOUNT values:', maple_project_dir, robosuite_project_dir)
+
+
 HOME = os.getenv('HOME') if os.getenv('HOME') is not None else os.getenv("USERPROFILE")
 
 DIR_AND_MOUNT_POINT_MAPPINGS = [
@@ -51,6 +54,7 @@ RUN_DOODAD_EXPERIMENT_SCRIPT_PATH = (
     join(maple_project_dir, 'scripts', 'run_experiment_from_doodad.py')
     # '/home/user/path/to/maple/scripts/run_experiment_from_doodad.py'
 )
+
 """
 AWS Settings
 """

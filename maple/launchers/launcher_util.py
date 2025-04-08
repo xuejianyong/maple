@@ -81,6 +81,7 @@ def recursive_items(dictionary):
 
 
 def save_experiment_data(dictionary, log_dir):
+    print(' --- launcher_util.py, log_dir', log_dir)
     with open(log_dir + '/experiment.pkl', 'wb') as handle:
         pickle.dump(dictionary, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
@@ -387,6 +388,8 @@ def query_yes_no(question, default="yes"):
             sys.stdout.write("Please respond with 'yes' or 'no' "
                              "(or 'y' or 'n').\n")
 
+
+
 """
 Below is doodad-specific code
 """
@@ -440,6 +443,7 @@ def run_experiment(
         local_input_dir_to_mount_point_dict=None,  # TODO(vitchyr): test this
         # local settings
         skip_wait=False,
+
         # ec2 settings
         sync_interval=180,
         region='us-east-1',
@@ -575,6 +579,7 @@ def run_experiment(
             except git.exc.InvalidGitRepositoryError:
                 pass
     except ImportError:
+        print(' --- launcher_util.py, the directory construction by git error')
         git_infos = None
     run_experiment_kwargs = dict(
         exp_prefix=exp_prefix,
@@ -588,6 +593,7 @@ def run_experiment(
         git_infos=git_infos,
         script_name=main.__file__,
     )
+    print(' --- launcher_util.py, mode info:', mode)
     if mode == 'here_no_doodad':
         run_experiment_kwargs['base_log_dir'] = base_log_dir
         return run_experiment_here(
