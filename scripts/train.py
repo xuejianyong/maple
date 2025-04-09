@@ -60,7 +60,7 @@ base_variant = dict(
             reward_scale=5.0,
 
             skill_config=dict(
-                skills=['atomic', 'open', 'reach', 'grasp', 'push'],
+                skills=['atomic', 'open', 'reach', 'grasp', 'push',],
                 aff_penalty_fac=15.0,
 
                 base_config=dict(

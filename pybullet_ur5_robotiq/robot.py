@@ -111,6 +111,7 @@ class RobotBase(object):
 
     def move_ee(self, action, control_method):
         assert control_method in ('joint', 'end')
+        print(' --- robot.py move_ee action : ', action)
         if control_method == 'end':
             x, y, z, roll, pitch, yaw = action
             pos = (x, y, z)

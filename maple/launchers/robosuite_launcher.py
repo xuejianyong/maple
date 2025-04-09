@@ -30,7 +30,7 @@ def experiment(variant):
         controller_config.update(controller_config_update)
 
         # robot_type = env_variant.get('robot_type', 'Panda')
-        robot_type = env_variant.get('robot_type', 'Panda')
+        robot_type = env_variant.get('robot_type', 'UR5e')
 
         obs_keys = env_variant['robot_keys'] + env_variant['obj_keys']
         print(' --- robosuite_launcher.py, obs_keys:', obs_keys)
