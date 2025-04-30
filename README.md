@@ -25,6 +25,8 @@ This guide contains information about (1) [Installation](#installation), (2) [Ru
 
 * the mujoco could be downloaded here: https://gist.github.com/ellisbrown/47bfd3e524aed11216cd3c0a0872a654
 * generate glad: https://glad.dav1d.de/generated/tmpui0_axe1glad/
+* the original code repository: https://github.com/UT-Austin-RPL/maple
+* 
 
 ### Setup conda environment
 1. Create the conda environment: `conda env create --name maple --file=maple.yml`
