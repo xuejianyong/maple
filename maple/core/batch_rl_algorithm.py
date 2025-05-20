@@ -25,7 +25,7 @@ class BatchRLAlgorithm(BaseRLAlgorithm, metaclass=abc.ABCMeta):
             min_num_steps_before_training=0,
             eval_epoch_freq=1,
             expl_epoch_freq=1,
-            eval_only=False,
+            eval_only=True,
             no_training=False,
     ):
         super().__init__(
@@ -51,6 +51,10 @@ class BatchRLAlgorithm(BaseRLAlgorithm, metaclass=abc.ABCMeta):
         gt.reset_root()
 
     def _train(self):
+        print('   ***  train from batch_rl_algorithm.py')
+        if self._eval_only:
+
+            print('MODE: only evaluation')
         if self.min_num_steps_before_training > 0 and not self._eval_only:
             init_expl_paths = self.expl_data_collector.collect_new_paths(
                 self.max_path_length,
@@ -73,7 +77,7 @@ class BatchRLAlgorithm(BaseRLAlgorithm, metaclass=abc.ABCMeta):
                     self.num_eval_steps_per_epoch,
                     discard_incomplete_paths=True,
                 )
-            gt.stamp('evaluation sampling')
+            gt.stamp('   *** evaluation sampling')
 
             if not self._eval_only:
                 for _ in range(self.num_train_loops_per_epoch):

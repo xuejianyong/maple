@@ -1,7 +1,7 @@
 import argparse
 
 from maple.launchers.launcher_util import run_experiment
-from maple.launchers.robosuite_launcher import experiment
+from maple.launchers.robosuite_launcher import experiment, experiment_check
 import maple.util.hyperparameter as hyp
 import collections
 
@@ -225,7 +225,7 @@ def deep_update(source, overrides):
 if __name__ == "__main__":
     # noinspection PyTypeChecker
     parser = argparse.ArgumentParser()
-    parser.add_argument('--env', type=str)
+    parser.add_argument('--env', type=str, default='stack')
     parser.add_argument('--label', type=str, default='test')
     parser.add_argument('--no_video', action='store_true')
     parser.add_argument('--no_gpu', action='store_true')
@@ -248,7 +248,7 @@ if __name__ == "__main__":
     for exp_id, variant in enumerate(sweeper.iterate_hyperparameters()):
         variant = process_variant(variant)
         run_experiment(
-            experiment, exp_folder=args.env, exp_prefix=args.label,
+            experiment_check, exp_folder=args.env, exp_prefix=args.label,
             variant=variant,
             snapshot_mode='gap_and_last', snapshot_gap=args.snapshot_gap,
             exp_id=exp_id,

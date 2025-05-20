@@ -531,7 +531,7 @@ def run_experiment(
         if mode == 'sss':
             base_log_dir = conf.SSS_LOG_DIR
         else:
-            base_log_dir = conf.LOCAL_LOG_DIR
+            base_log_dir = conf.LOCAL_LOG_DIR  # maple_project_dir + data
     if exp_folder is not None:
         base_log_dir = os.path.join(base_log_dir, exp_folder)
 
