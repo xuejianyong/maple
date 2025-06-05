@@ -1,0 +1,52 @@
+from collections import namedtuple
+
+import pybullet as p
+import time
+import pybullet_data
+import numpy as np
+
+
+physicsClient = p.connect(p.GUI)
+p.setAdditionalSearchPath(pybullet_data.getDataPath())
+p.setGravity(0,0,-10)
+planeId = p.loadURDF("plane.urdf")
+
+startPos = [0,0,0]
+startOrientation = p.getQuaternionFromEuler([0,0,0])
+#bikeid = p.loadURDF("./bicycle/bike.urdf", startPos, startOrientation)
+robotid = p.loadURDF("../ur3e/ur3e.urdf", [1, 0, 0])
+numJoints = p.getNumJoints(robotid)
+print('   *** robot ur3e numjoints: ', numJoints)
+
+pos = [0.1339999999999999, -0.2, 0.5]
+rot = p.getQuaternionFromEuler([np.pi, 0, np.pi])
+#robotiq_gripper_simple = p.loadURDF("../onrobot_2fg7_description/urdf/onrobot_2fg7_upload.urdf", pos, rot)
+urdf = "../onrobot_2fg7_description/urdf/onrobot_2fg7_upload.urdf"
+# urdf = "../robotiq_2f_85/robotiq_2f_85.urdf"
+#robotiq_gripper_simple = p.loadURDF("../onrobot_2fg7_description/onrobot_2fg7.urdf", pos, rot)
+robotiq_gripper_simple = p.loadURDF("../onrobot_rg2_visualization/urdf/onrobot_rg2_model.urdf", pos, rot)
+
+# p.createConstraint(robotid, 9, robotiq_gripper_simple, 0 , jointType=pybullet.JOINT_FIXED, jointAxis=[0, 0, 0], parentFramePosition=[0, 0, 0], childFramePosition=[0, 0, -0.07], childFrameOrientation=pybullet.getQuaternionFromEuler([0, 0, np.pi / 2]))
+grippernumJoints = p.getNumJoints(robotiq_gripper_simple)
+print('   *** gripper 2fg7 numjoints: ', grippernumJoints)
+
+
+for i in range(p.getNumJoints(robotiq_gripper_simple)):
+    print("   *** ", p.getJointInfo(robotiq_gripper_simple, i))
+    # self.joint_ids = [p.getJointInfo(self.robot_id, i)
+
+
+p.createConstraint(robotid, 9, robotiq_gripper_simple, 0,
+                                  jointType=p.JOINT_FIXED, jointAxis=[0, 0, 0],
+                                  parentFramePosition=[0, 0, 0], childFramePosition=[0, 0, -0.07],
+                                  childFrameOrientation=p.getQuaternionFromEuler([0, 0, np.pi / 2]))
+
+
+#boxId = p.loadURDF("r2d2.urdf",startPos, startOrientation)
+#set the center of mass frame (loadURDF sets base link frame) startPos/Ornp.resetBasePositionAndOrientation(boxId, startPos, startOrientation)
+for i in range (10000):
+    p.stepSimulation()
+    time.sleep(1./240.)
+cubePos, cubeOrn = p.getBasePositionAndOrientation(bikeid)
+print(cubePos,cubeOrn)
+p.disconnect()

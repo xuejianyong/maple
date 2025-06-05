@@ -273,8 +273,10 @@ def experiment_check(variant):
         # robot_type = env_variant.get('robot_type', 'Panda')
         robot_type = env_variant.get('robot_type', 'UR5e')
 
+
         obs_keys = env_variant['robot_keys'] + env_variant['obj_keys']
-        print(' --- robosuite_launcher.py, obs_keys:', obs_keys)
+        print(' *** robosuite_launcher.py, obs_keys:', obs_keys)
+        print(' *** env type: ', env_variant['env_type'])
 
         env = suite.make(
             env_name=env_variant['env_type'],
@@ -404,7 +406,7 @@ def experiment_check(variant):
     """
     import os.path as osp
     from maple.launchers.conf import LOCAL_LOG_DIR
-    filename = osp.join(LOCAL_LOG_DIR, 'lift/' 'itr_7000.pkl')
+    filename = osp.join(LOCAL_LOG_DIR, 'lift/' 'itr_10000.pkl')
     print('   *** filename: ', filename)
     try:
         print("Loading ckpt from", filename)
