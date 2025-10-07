@@ -53,8 +53,7 @@ class BatchRLAlgorithm(BaseRLAlgorithm, metaclass=abc.ABCMeta):
     def _train(self):
         print('   ***  train from batch_rl_algorithm.py')
         if self._eval_only:
-
-            print('MODE: only evaluation')
+            print('   MODE: only evaluation')
         if self.min_num_steps_before_training > 0 and not self._eval_only:
             init_expl_paths = self.expl_data_collector.collect_new_paths(
                 self.max_path_length,
@@ -64,10 +63,8 @@ class BatchRLAlgorithm(BaseRLAlgorithm, metaclass=abc.ABCMeta):
             self.replay_buffer.add_paths(init_expl_paths)
             self.expl_data_collector.end_epoch(-1)
 
-        for epoch in gt.timed_for(
-                range(self._start_epoch, self.num_epochs + 1),
-                save_itrs=True,
-        ):
+        for epoch in gt.timed_for(range(self._start_epoch, self.num_epochs + 1),save_itrs=True,):
+            print('   for epoch')
             for pre_epoch_func in self.pre_epoch_funcs:
                 pre_epoch_func(self, epoch)
 

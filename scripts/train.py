@@ -1,7 +1,7 @@
 import argparse
 
 from maple.launchers.launcher_util import run_experiment
-from maple.launchers.robosuite_launcher import experiment, experiment_check
+from maple.launchers.robosuite_launcher import experiment, experiment_check, experiment_sim
 import maple.util.hyperparameter as hyp
 import collections
 
@@ -127,6 +127,9 @@ env_params = dict(
     lift={
         'env_variant.env_type': ['Lift'],
     },
+    sim={
+        'env_variant.env_type': ['SimulationEnv'],
+    },
     door={
         'env_variant.env_type': ['Door'],
         'env_variant.controller_type': ['OSC_POSITION'],
@@ -245,10 +248,13 @@ if __name__ == "__main__":
     sweeper = hyp.DeterministicHyperparameterSweeper(
         search_space, default_parameters=base_variant,
     )
+    print()
+    print()
+    print('   *************   experiment run   *************   ')
     for exp_id, variant in enumerate(sweeper.iterate_hyperparameters()):
         variant = process_variant(variant)
         run_experiment(
-            experiment_check, exp_folder=args.env, exp_prefix=args.label,
+            experiment_sim, exp_folder=args.env, exp_prefix=args.label,
             variant=variant,
             snapshot_mode='gap_and_last', snapshot_gap=args.snapshot_gap,
             exp_id=exp_id,
