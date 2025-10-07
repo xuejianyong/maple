@@ -254,7 +254,7 @@ if __name__ == "__main__":
     for exp_id, variant in enumerate(sweeper.iterate_hyperparameters()):
         variant = process_variant(variant)
         run_experiment(
-            experiment_sim, exp_folder=args.env, exp_prefix=args.label,
+            experiment_check, exp_folder=args.env, exp_prefix=args.label,
             variant=variant,
             snapshot_mode='gap_and_last', snapshot_gap=args.snapshot_gap,
             exp_id=exp_id,

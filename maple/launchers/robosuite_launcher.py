@@ -477,6 +477,7 @@ def experiment_check(variant):
     algorithm.to(ptu.device)
     algorithm.train(start_epoch=variant.get('ckpt_epoch', 0))
 
+# experiment is designed for the robot room.
 def experiment_sim(variant):
     print()
     print()
