@@ -81,6 +81,8 @@ def experiment(variant):
     action_dim_s = getattr(expl_env, "action_skill_dim", 0)
     print('   *** robosuite_launcher.py action_dim_s: ', action_dim_s)  # 5
     action_dim_p = action_dim - action_dim_s
+
+
     if action_dim_s == 0:
         trainer_class = SACTrainer
         policy = TanhGaussianPolicy(
@@ -159,6 +161,8 @@ def experiment(variant):
         variant['replay_buffer_size'],
         expl_env,
     )
+
+
     trainer = trainer_class(
         env=eval_env,
         policy=policy,
@@ -256,7 +260,7 @@ def get_video_save_func(variant):
     return video_save_func
 
 def experiment_check(variant):
-    print('   *************   experiment check   *************   ')
+    print('   *************   experiment check function   *************   ')
 
     def make_env(mode):
         assert mode in ['expl', 'eval']
@@ -265,8 +269,10 @@ def experiment_check(variant):
         env_variant = variant['env_variant']
 
         controller_config = load_controller_config(default_controller=env_variant['controller_type'])
+        # controller__type=OSC_POSITION_YAW
         controller_config_update = env_variant.get('controller_config_update', {})
         controller_config.update(controller_config_update)
+        # dict function
 
         # robot_type = env_variant.get('robot_type', 'Panda')
         robot_type = env_variant.get('robot_type', 'UR5e')
@@ -274,6 +280,7 @@ def experiment_check(variant):
         obs_keys = env_variant['robot_keys'] + env_variant['obj_keys']
         print(' *** robosuite_launcher.py, obs_keys:', obs_keys)
         print(' *** env type: ', env_variant['env_type'])
+        print()
 
         env = suite.make(
             env_name=env_variant['env_type'],
@@ -430,7 +437,7 @@ def experiment_check(variant):
 
     expl_policy = data['exploration/policy']
     expl_policy.to(ptu.device)
-
+    # algorithm check end
 
 
 

@@ -38,11 +38,11 @@ base_variant = dict(
         high_init_ent=True,
         one_hot_factor=0.50,
     ),
+
     env_variant=dict(
         robot_keys=['robot0_eef_pos', 'robot0_eef_quat', 'robot0_gripper_qpos', 'robot0_gripper_qvel'],
         obj_keys=['object-state'],
         controller_type='OSC_POSITION_YAW',
-
         controller_config_update=dict(
             position_limits=[
                 [-0.30, -0.30, 0.75],
@@ -250,7 +250,7 @@ if __name__ == "__main__":
     )
     print()
     print()
-    print('   *************   experiment run   *************   ')
+    print('   *************   experiment check run   *************   ')
     for exp_id, variant in enumerate(sweeper.iterate_hyperparameters()):
         variant = process_variant(variant)
         run_experiment(
